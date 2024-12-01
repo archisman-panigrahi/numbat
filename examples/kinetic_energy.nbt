@@ -1,3 +1,0 @@
-fn kineticEnergy(mass: Mass, speed: Velocity) -> Energy = ½ mass speed²
-
-assert_eq(kineticEnergy(800 kg, 30 m/s), 360 kJ, 0.1 J)

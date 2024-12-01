@@ -1,3 +1,0 @@
-fn speed(distance: Length, duration: Time) -> Velocity = distance / duration
-
-speed(3 meter, 2 meter)

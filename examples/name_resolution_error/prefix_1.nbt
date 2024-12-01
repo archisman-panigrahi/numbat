@@ -1,4 +1,0 @@
-let kilofoo = 1
-
-@metric_prefixes
-unit foo: Length

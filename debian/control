@@ -1,0 +1,13 @@
+Source: numbat
+Maintainer: Archisman Panigrahi <apandada1@gmail.com>
+Section: utils
+Standards-Version: 4.1.4
+Build-depends: debhelper
+Homepage: https://numbat.dev/
+Priority: optional
+
+Package: numbat
+Architecture: amd64
+Depends: libc6, ${misc:Depends}
+Section: utils
+Description: Statically typed programming language for scientific computations with first class support for physical dimensions and units

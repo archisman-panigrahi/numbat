@@ -1,0 +1,29 @@
+numbat (1.14.0) focal; urgency=low
+
+  * Auto build.
+
+ -- Archisman Panigrahi <apandada1@gmail.com>  Sat, 30 Nov 2024 04:33:34 +0000
+
+numbat (1.13.0) focal; urgency=medium
+
+  * New version
+
+ -- Archisman Panigrahi <apandada1@gmail.com>  Tue, 30 Aug 2024 12:28:36 -0500
+
+numbat (1.12.0) focal; urgency=medium
+
+  * New version
+
+ -- Archisman Panigrahi <apandada1@gmail.com>  Tue, 28 May 2024 11:50:23 -0500
+
+numbat (1.11.0) focal; urgency=medium
+
+  * New version
+
+ -- Archisman Panigrahi <apandada1@gmail.com>  Thu, 14 Mar 2024 21:55:12 -0500
+
+numbat (1.10.1) focal; urgency=medium
+
+  * First release for PPA
+
+ -- Archisman Panigrahi <apandada1@gmail.com>  Mon, 19 Feb 2024 15:29:20 -0500

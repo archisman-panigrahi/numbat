@@ -1,6 +1,0 @@
-let v: Velocity = 3 m/s
-let mass: Mass = 80 kg
-let height = 10 m
-let E_pot: Energy = mass * g0 * height
-
-0.5 * mass * v + E_pot

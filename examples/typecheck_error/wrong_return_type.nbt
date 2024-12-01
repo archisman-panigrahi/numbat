@@ -1,3 +1,0 @@
-let time: Time = 5 second
-
-fn foo(distance: Length) -> Velocity = time / distance

@@ -1,8 +1,0 @@
-# Compute the mass of planet earth
-
-let radius: Length = 6000 km
-let volume: Volume = 4/3 · π · radius³
-let ρ: MassDensity = 5000 kg/m³
-let earth_mass: Mass = ρ · volume
-
-assert_eq(earth_mass, 4.52389e24 kg, 0.00001e24 kg)

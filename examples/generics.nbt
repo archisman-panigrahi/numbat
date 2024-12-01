@@ -1,6 +1,0 @@
-fn my_sqrt<D: Dim>(x: D^2) -> D = x^(1/2)
-
-let x: Length = my_sqrt(4 meter²)
-let y: Scalar = my_sqrt(100)
-
-assert_eq(x, 2 meter)
