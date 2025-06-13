@@ -2,7 +2,7 @@
 
 <img src="numbat-wasm/www/numbat.svg">
 
-**[Try online!] • [Documentation] • [Tutorial] • [Syntax reference] • [Installation] • [Development]**
+**[Try online!] • [Documentation] • [Tutorial] • [Syntax reference] • [Installation] • [Discord] • [Development]**
 
 [Try online!]: https://numbat.dev/
 [Features]: #key-features
@@ -10,6 +10,7 @@
 [Tutorial]: https://numbat.dev/doc/tutorial.html
 [Syntax reference]: https://numbat.dev/doc/example-numbat_syntax.html
 [Installation]: https://numbat.dev/doc/cli-installation.html
+[Discord]: https://discord.gg/kAaVTsat4D
 [Development]: #development
 
 *Numbat* is a statically typed programming language for scientific computations<br>
@@ -173,5 +174,5 @@ for the standard paths on other operating systems).
 ## Contact us
 
 To contact us, either [open a GitHub issue](https://github.com/sharkdp/numbat/issues/new/choose)
-or [discussion](https://github.com/sharkdp/numbat/discussions), or pop into `#numbat` on
-[Libera.Chat](https://libera.chat) ([link to webchat](https://web.libera.chat/gamja/#numbat)).
+or [discussion](https://github.com/sharkdp/numbat/discussions), or pop into our
+[Discord server](https://discord.gg/kAaVTsat4D).
