@@ -1,3 +1,9 @@
+numbat (1.18.0) focal; urgency=medium
+
+  * Auto build
+
+ -- Archisman Panigrahi <apandada1@gmail.com>  Fri, 16 Jan 2026 08:41:42 +0530
+
 numbat (1.16.0) focal; urgency=low
 
   * Auto build.
