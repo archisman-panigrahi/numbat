@@ -95,3 +95,17 @@ fn fract(x: Scalar) -> Scalar
 @url("https://doc.rust-lang.org/std/primitive.f64.html#method.rem_euclid")
 @example("mod(27, 5)")
 fn mod<T: Dim>(a: T, b: T) -> T
+
+@name("Parse a string as a quantity")
+@description("Parses a string as a quantity. The expected return type (dimension) must be inferable from the surrounding context (see examples).")
+@example("let t: Time = parse(\"120 s\")")
+@example("let length: Length = parse(\"1 km\")")
+@example("let mass: Mass = parse(\"9.10938e-31 kg\")")
+@example("let n: Scalar = parse(\"-100_000\")")
+@example("parse(\"0xFF\") -> bin")
+fn parse<T: Dim>(input: String) -> T
+
+@name("Command-line arguments")
+@description("Returns the command-line arguments passed to the script. The first argument is the name of the script itself.")
+@example("let xs = tail(args())", "Get a list of all arguments except the script name.")
+fn args() -> List<String>
