@@ -1,0 +1,93 @@
+# Sunrise, sunset, and moon phase calculations
+#
+# Useful resources:
+# - https://gml.noaa.gov/grad/solcalc/
+# - https://en.wikipedia.org/wiki/Sunrise_equation
+# - https://en.wikipedia.org/wiki/Equation_of_the_center
+# - https://en.wikipedia.org/wiki/Equation_of_time
+# - https://en.wikipedia.org/wiki/Lunar_phase
+
+use math::trigonometry
+use datetime::julian_date
+use extra::astronomy
+
+struct Position {
+  lat: Angle,
+  lon: Angle,
+}
+
+struct SunTimes {
+  sunrise: DateTime,
+  transit: DateTime,
+  sunset: DateTime,
+}
+
+@name("Sunrise and sunset")
+@description("Compute sunrise, solar noon (transit), and sunset times for a given location and date.")
+@example("sunrise_sunset(Position {{ lat: 40.713°, lon: -74.006° }}, datetime(\"2023-03-21 12:00:00 America/New_York\"))")
+fn sunrise_sunset(position: Position, dt: DateTime) -> SunTimes =
+    SunTimes {
+      sunrise: from_julian_date(J_rise),
+      transit: from_julian_date(J_transit),
+      sunset: from_julian_date(J_set),
+    }
+  # Earth's angular velocity (one full rotation per day)
+  where ω_earth: Angle / Time = 360° / day
+    # Julian date of the input datetime
+    and J_date = dt -> julian_date
+    # Days since J2000 epoch, rounded to nearest day
+    and n: Time = (J_date - J2000) |> round_in(days)
+    # Mean solar time at the observer's longitude
+    and J_star: Time = n - position.lon / ω_earth
+    # Solar mean anomaly: angle from perihelion if orbit were circular
+    and M: Angle = mod(earth_mean_anomaly_j2000 + (360° / anomalistic_year) × J_star, 360°)
+    # Shorthand for Earth's orbital eccentricity
+    and ee = earth_orbital_eccentricity
+    # Equation of the center: correction from mean to true anomaly
+    and eoc: Angle = (2 ee - ee³/4) × sin(M) + (5/4 × ee²) × sin(2 M) + (13/12 × ee³) × sin(3 M)
+    # Longitude of perihelion, which precesses over time
+    and ω_perihelion = earth_longitude_of_perihelion_j2000 + earth_perihelion_precession_rate × J_star
+    # Ecliptic longitude: Sun's position along the ecliptic
+    and λ: Angle = mod(M + eoc + 180° + ω_perihelion, 360°)
+    # Solar transit (noon): when the Sun crosses the local meridian
+    and J_transit = J2000 + J_star + 7.659 min × sin(M) - 9.863 min × sin(2 λ)
+    # Solar declination: Sun's angle north or south of celestial equator
+    and sin_δ = sin(λ) × sin(earth_axial_tilt)
+    and δ = asin(sin_δ)
+    # Sunrise correction: atmospheric refraction (34') + Sun's angular radius
+    and sunrise_correction: Angle = -(34 arcmin + atan(solar_radius / AU))
+    # Hour angle: angular distance from solar noon to sunrise/sunset
+    and cos_ω0 = (sin(sunrise_correction) - sin(position.lat) × sin_δ) / (cos(position.lat) × cos(δ))
+    and ω0: Angle = acos(cos_ω0)
+    # Sunrise and sunset times as Julian dates
+    and J_rise = J_transit - ω0 / ω_earth
+    and J_set = J_transit + ω0 / ω_earth
+
+dimension LunarCycle
+
+@name("Lunar cycle")
+@description("Unit for moon phase measurement. 0 = new moon, 0.5 lunar_cycle = full moon, 1 lunar_cycle = next new moon.")
+@aliases(lunar_cycles)
+unit lunar_cycle: LunarCycle
+
+@name("Moon phase")
+@description("Compute the moon phase for a given date and time. Returns the phase from 0 to 1 lunar_cycle, where 0 is a new moon and 0.5 lunar_cycle is a full moon.")
+@example("datetime(\"2026-01-30 12:00:00 UTC\") -> moon_phase")
+fn moon_phase(dt: DateTime) -> LunarCycle = mod(cycles, 1) × lunar_cycle
+  where reference_new_moon = datetime("2000-01-06 18:14:00 UTC")
+    and time_since_new_moon = dt - reference_new_moon
+    and cycles = time_since_new_moon / synodic_month
+
+@name("Moon phase name")
+@description("Convert a moon phase to its name and Unicode symbol (e.g., \"🌘 Waning Crescent\").")
+@example("datetime(\"2026-01-30 12:00:00 UTC\") -> moon_phase -> moon_phase_name")
+fn moon_phase_name(phase: LunarCycle) -> String =
+    if phase < 1/16 × lunar_cycle then "🌑 New Moon"
+    else if phase < 3/16 × lunar_cycle then "🌒 Waxing Crescent"
+    else if phase < 5/16 × lunar_cycle then "🌓 First Quarter"
+    else if phase < 7/16 × lunar_cycle then "🌔 Waxing Gibbous"
+    else if phase < 9/16 × lunar_cycle then "🌕 Full Moon"
+    else if phase < 11/16 × lunar_cycle then "🌖 Waning Gibbous"
+    else if phase < 13/16 × lunar_cycle then "🌗 Last Quarter"
+    else if phase < 15/16 × lunar_cycle then "🌘 Waning Crescent"
+    else "🌑 New Moon"
